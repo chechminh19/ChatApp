@@ -1,0 +1,12 @@
+# Bỏ qua tất cả các file .vsidx
+*.vsidx
+
+# Bỏ qua thư mục .vs
+.vs/
+
+# Bỏ qua tất cả các file nhị phân (nếu cần)
+*.exe
+*.bin
+
+# Bỏ qua thư mục chứa tệp tạm thời
+temp/

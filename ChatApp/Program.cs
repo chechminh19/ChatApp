@@ -43,12 +43,14 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseRouting();
-app.UseCors(builder =>
-{
-    builder.WithOrigins("http://localhost:5000")
-    .AllowAnyHeader()
-    .AllowAnyMethod();
-});
+app.UseCors(
+//    builder =>
+//{
+//    builder.WithOrigins("https://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net")
+//    .AllowAnyHeader()
+//    .AllowAnyMethod();
+//}
+);
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chat");
