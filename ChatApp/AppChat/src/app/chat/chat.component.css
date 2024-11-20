@@ -1,8 +1,13 @@
 .container {
-    max-width: 1180px;
-    margin: auto;
-    background-color: #52ACFF;
-    background-image: linear-gradient();
+    max-width: 1200px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding: 20px;   
+    
+    border-radius: 40px; /* Làm cho góc trở nên bo tròn */     
+    background-image: linear-gradient(to right, #4FACFE, #F4D03F);
+    
 }
 
 .chat_header {
@@ -11,14 +16,34 @@
     align-items: center;
     height: 70px;
 }
-
+.inbox-msg{    
+    padding: 20px;  
+    
+}
+.headind_srch row{
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
 .no_chat{
     height: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
 }
-
+.inbox-people{
+    background-color: #f4f4f4;   
+    padding: 1.5px;   
+    border-radius: 20px;
+    max-height: 595px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.inbox-type{
+    background-color: #f4f4f4;    
+    padding: 6px;
+    border-radius: 20px;   
+}
 .join {
     display: flex;
     flex-direction: column;
@@ -49,14 +74,9 @@ img{
 .top_spac {
     margin: 20px 0 0;
 }
-.recent_heading{
+.recent_heading{   
     float: left;
-    width: 40%;
-}
-.srch_bar{
-    display: inline-block;
-    text-align: right;
-    width: 60%;
+    text-align: left;
 }
 
 .heading_srch
@@ -66,39 +86,54 @@ img{
     border-bottom: 1px solid #c4c4c4;
 }
 .recent_heading h4 {
-    color:  #05728f;
-    font-size: 20px;
-    margin: auto;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 17px;
+    
 }
 .srch_bar input {
-    border: 1px solid #cdcdcd;
-    border-width: 0 0 1px 0;
-    width: 80%;
-    padding: 2px 0 4px 6px;
-    background: none;
+    border-radius: 5px;
+    width: 70%;
+    padding: 1px 1px; /* Tùy chỉnh padding theo thiết kế */
+    background-color: #f2f2f2; /* Màu nền cho input */
+    border: 1px solid #ccc; /* Viền bo tròn */
     outline: none;
 }
-.srch_bar .input-group-addon button{
-    background-color: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: medium none;
-    padding: 0;
-    color: #707070;
-    font-size: 19px;   
+.input-group-addon button{    
+    width: 20%;  
+    padding: 1px 1px; /* Tùy chỉnh padding theo thiết kế */
+    background-color: #d6b222; /* Màu nền cho button */
+    color: #fff; /* Màu chữ */
+    border: 1px solid #d6b222; 
+    /* Viền */
+    border-radius: 5px; /* Bo tròn viền */
+    cursor: pointer; /* Thay đổi icon chuột khi di chuyển qua button */
+    
 }
-
-.srch_bar .input-group-addon{
-    margin:  0 0 0 -27px;
+.stylish-input-group{
+    float: right;   
 }
+/* .input-group-addon{
+    float: right;
+    border-radius: 20px;
+} */
 .chat_ib h5 {
     font-size: 16px;
     color: #464646;
-    margin:  0 0 8px 0;
+    margin:  3px 3px 3px 3px;
 }
 .chat_ib h5 span {
+    color: #52ACFF;
     font-size: 13px;
     float: right;
 }
-
+.headind_srch{
+    display: flex;
+    justify-content: space-between;
+}
+.recent_heading, .srch_bar {
+    flex: 1; /* Đặt tỉ lệ mỗi phần bằng nhau */
+}
 .chat_ib p {
     font-size: 15px;
     color: #989898;
@@ -113,18 +148,36 @@ img{
     padding: 0 0 0 15px;
     width: 88%;
 }
-.chat_people {
-    overflow: hidden;
-    clear: both;
-}
+
 .chat_list{
-    border-bottom: 1px solid #c4c4c4;
-    margin: 0;
-    padding: 18px 16px 10px;
+    display: flex;
+    align-items: center;
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #ffcc00;
+    cursor: pointer;
+    border-radius: 20px;
+    
+}
+.chat-header{
+    padding-left: 20px;
+    padding-right: 2px;
+    display: flex;
+  flex-direction: row; /* Dàn theo hướng dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  justify-content: space-between; /* Cách đều các phần tử bên trong */
+  height: 100%; /* Đảm bảo chiều cao của chat-header để đạt được space-between */
+}
+.chat-header button {
+    margin-top: 20px;
+    margin-right: 20px;    
+    align-self: flex-start; /* Đặt phần tử button ở cuối theo chiều dọc */    
 }
 .inbox_chat{
-    height: 550px;
-    overflow-y: #ebebeb;
+    height: 544px;    
+    overflow-y: auto;
+    padding: 5px;
+    background-color: #f4f4f4;
+    margin-bottom: auto;
 }
 .active_chat{
     background: #ebebeb;
@@ -136,82 +189,123 @@ img{
 }
 .received_msg{
     display: inline-block;
-    padding: 0 0 0 10px;
+    padding: 0;
     vertical-align: top;
     width: 92%;
 }
-.receive_width_msg p {
-    background-color: #ebebeb none repeat scroll 0 0;
-    border-radius: 3px;
-    color: #646464;
-    font-size: 14px;
+
+.received_width_msg p {
+    background: #05728f none repeat scroll 0 0;
+    border-radius: 5px;
+    font-size: 13px;
     margin: 0;
-    padding: 5px 10px 5px 12px;
-    width: 100%;
+    color: #fff;
+    padding: 2px 5px 2px 7px;
+    max-width: 47%;
+    word-wrap: break-word;
 }
 .time_date {
-    color: #747474;
+    color: #141311;
     display: block;
-    font-size: 12px;
-    margin: 8px 0 0;
-    margin-bottom: 6px;
+    font-size: 10px;
+    margin: 1px;
+    margin-bottom: 3px;
 }
 .receive_width_msg {
     width: 57%;
 }
 .mesgs{
-    float: left;
-    padding: 30px 15px 0 25px;
-    width: 60%;
+    flex-direction: column;
+    display: flex;
+    position: relative;
+    overflow-y: auto;   
+    padding: 20px;     
+    background-color: #f4f4f4;
+    
 }
+
 .sent_msg p {
     background: #05728f none repeat scroll 0 0;
-    border-radius: 3px;
-    font-size: 14px;
+    border-radius: 5px;
+    font-size: 13px;
     margin: 0;
     color: #fff;
-    padding: 5px 10px 5px 12px;
-    width: 100%;
+    padding: 2px 5px 2px 7px;
+    max-width: 100%;
+    word-wrap: break-word;
 }
 .outgoing_msg{
     overflow: hidden;
-    margin: 8px 0 8px;
+    margin: 5px 0 5px;
 }
+.sent_msg, .received_msg {
+    padding: 3px;
+    border-radius: 5px;
+    margin-bottom: 0;
+}
+
 .sent_msg{
     float: right;
     width: 46%;
 }
-.input_msg_write input{
+.input_msg_write{
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+.write_msg{
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    margin:0 5px;
+}
+.input_msg_write input a{
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
     color: #4c4c4c;
     font-size: 15px;
     min-height: 48px;
     width: 100%;
+    border: 1px solid #ccc;
 }
-.type_msg{
-    border-top: 1px solid #c4c4c4;
-    position: relative;
+.type_msg{   
+    display: flex; 
+    background-color: #f4f4f4;
+    margin-top: auto;
+    padding: 10px;    
+
 }
+.file_input_wrapper {
+    margin-right: 5px; /* Adjust margin as needed */
+}
+
+.file_input {
+    font-size: 14px; /* Adjust font size as needed */
+}
+
 .msg_send_btn{
-    background: #05728f none repeat scroll 0 0;
-    border:  medium none;
-    border-radius: 50%;
-    color:  #fff;
+    width: 50px;
+    padding: 12px;
+    background: #5699d2; 
+    color: #fff;
+    border: none;
+    border-radius: 6px; 
     cursor: pointer;
-    font-size: 17px;
-    height: 33px;
-    position: absolute;
-    right: 0;
-    top: 11px;
-    width: 33px;
+    margin-left: 5px;
 }
 .messaging{
-    padding: 0 0 50px 0;
+    
+    padding: auto;
 }
 .msg_history{
-    height: 516px;
+    height: 475px;
+    padding: 10px;
+    border-radius: 1px;
+    background-color: #f4f4f4;
     overflow-y: auto;
+    margin-bottom: auto; 
 }
+
 
 

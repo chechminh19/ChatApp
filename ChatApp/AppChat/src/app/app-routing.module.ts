@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ChatComponent } from './chat/chat.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'join-room', pathMatch: 'full'},
@@ -12,7 +14,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [HttpClientModule,RouterModule.forRoot(routes)], 
+  
+  exports: [RouterModule],
+
 })
 export class AppRoutingModule { }

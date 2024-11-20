@@ -1,65 +1,103 @@
-<div class="container mt-5">    
-    <div class="chat-header my-2">        
-            <h1 class="text-center my-2" >Welcome to <span class="text-warning">{{currentRoomName}} </span>Group</h1>
-        <button (click)="leaveChat()" class="btn btn-danger">Leave Chat</button>            
+<div class="container">
+    <div class="chat-header">
+        <h1 class="text-center my-2">Welcome to <span class="text-warning"> {{currentRoomName}} </span>Group</h1>
+        <button (click)="leaveChat()" class="btn btn-danger">Leave Chat</button>
     </div>
+
     <div class="messaging">
         <div class="inbox-msg">
-            <div class="inbox-people">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4 clas="text-white">Connected Users</h4>
-                    </div>
-                    <div class="srch_bar">
-                        <div class="stylish-input-group">
-                                <input type="text" class="search_bar" placeholder="Search">
-                                <span class="input-group-addon">
-                                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="inbox_chat">
-                <div class="chat_list">
-                    <div class="chat_people">
-                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="">
-                            <div class="chat_ib mt-3">
-                                <h5>Hello connect Users <span class="online"></span></h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mesgs">
-                <div class="msg_history">
-                    <ng-container *ngFor="let message of messages">
-                        <div [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
-                          <div *ngIf="message.user != loggedInUserName" class="incoming_msg_img">
-                            <img src="https://ptetutorials.com/images/user-profile.png">
-                          </div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="inbox-type">
+                        <div class="mesgs">
+                            <div #scrollMe class="msg_history">
+                                <ng-container *ngFor="let message of this.chatService.messages$ | async">
+                                    <div
+                                        [ngClass]="{'incoming_msg': message.user !== loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
+                                        <div *ngIf="message.user !== loggedInUserName" class="incoming_msg_img">
+                                            <img src="https://ptetutorials.com/images/user-profile.png">
+                                        </div>
 
-                          <div *ngIf="message.user != loggedInUserName" class="received_msg">
-                            <div class="received_withd_msg">
-                                <p>{{message.message}}</p> 
-                                <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                                                               
+                                        <div *ngIf="message.user !== loggedInUserName" class="received_msg">
+                                            <div class="received_width_msg">
+                                                <p>{{message.message}}</p>
+                                                <span class="time_date">{{message.user}} | {{message.messageTime |
+                                                    date:'medium'}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div *ngIf="message.user === loggedInUserName" class="sent_msg">
+                                            <p>{{message.message}}</p>
+                                            <span class="time_date">{{message.user}} | {{message.messageTime |
+                                                date:'medium'}}</span>
+                                        </div>
+
+                                    </div>
+                                </ng-container>
                             </div>
-                          </div>    
-                                                
-                          <div *ngIf="message.user === loggedInUserName" class="sent_msg">                    
-                            <p>{{message.message}}</p>
-                            <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                            
-                          </div>     
+                            <div class="type_msg">
+                                <div class="input_msg_write">
+                                    <input (keydown.enter)="sendMessage()" [(ngModel)]="inputMessage" type="text"
+                                        class="write_msg" placeholder="Type a message" />
+                                    <button (click)="sendMessage()" class="msg_send_btn" type="button"><i
+                                            class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
                         </div>
-                    </ng-container>
+                    </div>
+
+                    <!-- <div *ngIf="message.user !== loggedInUserName" class="received_msg">
+                        <div class="received_width_msg">
+                            <ng-container *ngIf="message.imageUrl; else textContent">
+                                <img [src]="message.imageUrl" alt="Image">
+                            </ng-container>
+                            <ng-template #textContent>
+                                <p>{{message.message}}</p>
+                            </ng-template>
+                            <span class="time_date">{{message.user}} | {{message.messageTime | date:'medium'}}</span>
+                        </div>
+                    </div>
+        
+                    <div *ngIf="message.user === loggedInUserName" class="sent_msg">
+                        <div class="sent_width_msg">
+                            <ng-container *ngIf="message.imageUrl; else sentTextContent">
+                                <img [src]="message.imageUrl" alt="Image">
+                            </ng-container>
+                            <ng-template #sentTextContent>
+                                <p>{{message.message}}</p>
+                            </ng-template>
+                            <span class="time_date">{{message.user}} | {{message.messageTime | date:'medium'}}</span>
+                        </div>
+                    </div> -->
+
                 </div>
-                <div class="type_msg">
-                    <div class="input_msg_write">
-                    <input (keydown.enter)="SendMessage()" [(ngModel)] ="inputMessage" type="text" class="write_msg" placeholder="Type a message"/>
-                    <button (click)="SendMessage()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                <div class="col-4">
+                    <div class="inbox-people">
+                        <div class="headind_srch row">
+                            <div class="recent_heading">
+                                <h4 clas="text-white">Connected Users</h4>
+
+                            </div>
+                        </div>
+
+                        <div #scrollUser class="inbox_chat">
+                            <ng-container *ngFor="let usera of this.chatService.connectedUsers$ | async">
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"><img
+                                                src="https://ptetutorials.com/images/user-profile.png" alt="">
+                                        </div>
+                                        <div class="chat_ib">
+                                            <h5>{{usera}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>

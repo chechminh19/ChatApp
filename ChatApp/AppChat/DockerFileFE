@@ -1,0 +1,16 @@
+# Dockerfile cho ứng dụng Angular
+FROM node:16 AS build
+WORKDIR /app
+
+# Copy package.json và cài đặt dependencies
+COPY package.json package-lock.json ./
+RUN npm install
+
+# Copy mã nguồn vào và build ứng dụng Angular
+COPY . .
+RUN npm run build --prod
+
+# Dùng Nginx để phục vụ ứng dụng Angular đã build
+FROM nginx:alpine
+COPY --from=build /app/dist/app-chat /usr/share/nginx/html
+EXPOSE 80
