@@ -1,0 +1,26 @@
+﻿version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./AppChat
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "4200:80"  # Mở cổng 4200 để truy cập ứng dụng Angular
+    networks:
+      - app-network
+    depends_on:
+      - backend  # Đảm bảo backend SignalR hoạt động trước khi frontend khởi động
+
+  backend:
+    build:
+      context: ./ChatApp  # Đảm bảo rằng bạn đã để đúng đường dẫn đến backend SignalR
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"  # Mở cổng 5000 cho backend SignalR
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

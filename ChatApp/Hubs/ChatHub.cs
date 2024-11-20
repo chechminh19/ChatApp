@@ -20,25 +20,48 @@ namespace ChatApp.Hubs
         }
         public async Task SendMessage(string mess)
         {
-            if(_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoomConnect))
+            try
             {
-                await Clients.Group(userRoomConnect.Room!)
-                    .SendAsync("ReceiveMessage", userRoomConnect.User, mess, DateTime.Now, userRoomConnect.Room);
+                if (_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoomConnect))
+                {                    
+                    await Clients.Group(userRoomConnect.Room!)
+                      .SendAsync("ReceiveMessage", userRoomConnect.User, mess, DateTime.Now, userRoomConnect.Room);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error: {ex.Message}");
+                throw;
             }
         }
+        //public async Task UploadImage(string fileData)
+        //{
+        //    try
+        //    {
+        //        if (_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoomConnect))
+        //        {
+        //            if (fileData != null)
+        //            {   
+        //                await Clients.Group(userRoomConnect.Room!)
+        //                     .SendAsync("ReceiveMessage", userRoomConnect.User, fileData, DateTime.Now, userRoomConnect.Room);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.Error.WriteLine($"Error: {ex.Message}");
+        //        throw;
+        //    }
+        //}
         public override Task OnDisconnectedAsync(Exception? exp)
-        {
-            if (exp != null)
-            {
-                // Handle the exception here
-                return base.OnDisconnectedAsync(exp);
-            }
-            // Remove the user from the chat room
+        {            
+            
             if (!_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoom))
             {
                 return base.OnDisconnectedAsync(exp);
             }
-            Clients.Group(userRoom.Room!).SendAsync("ReceiveMessage", "Let's program Bot", $"{userRoom.User} has left the group", DateTime.Now);
+            _connect.Remove(Context.ConnectionId);
+            Clients.Group(userRoom.Room!).SendAsync("ReceiveMessage", $"{userRoom.User}", $"{userRoom.User} has left the group", DateTime.Now, $"{userRoom.Room}");
             // Update connected users in the room
             SendConnectedUser(userRoom.Room!);
 
@@ -47,7 +70,7 @@ namespace ChatApp.Hubs
         public Task SendConnectedUser(string room)
         {
             var listt = _connect.Values.Where(r => r.Room == room).Select(r => r.User).ToList();
-            return Clients.Group(room).SendAsync("ConnnectedUser", listt);
+            return Clients.Group(room).SendAsync("ConnectedUser", listt);
         }
     }
 }
