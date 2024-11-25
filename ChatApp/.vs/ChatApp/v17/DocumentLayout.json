@@ -100,7 +100,7 @@
               "RelativeDocumentMoniker": "Properties\\launchSettings.json",
               "ToolTip": "D:\\NET CORE\\Studying\\ASP.NET Core\\ChatApp\\ChatApp\\Properties\\launchSettings.json",
               "RelativeToolTip": "Properties\\launchSettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAuAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-11-20T12:35:56.114Z",
               "EditorCaption": ""
@@ -163,8 +163,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAIwBsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T15:57:38.334Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-19T15:57:38.334Z"
             },
             {
               "$type": "Document",
@@ -188,8 +187,7 @@
               "RelativeToolTip": "Hubs\\ChatHub.cs",
               "ViewState": "AQIAABwAAAAAAAAAAAAYwDYAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-19T15:57:34.343Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-19T15:57:34.343Z"
             },
             {
               "$type": "Document",

@@ -19,7 +19,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("https://chat-app-sandy-ten.vercel.app/join-room")
+        builder.WithOrigins("https://chat-app-sandy-ten.vercel.app")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
