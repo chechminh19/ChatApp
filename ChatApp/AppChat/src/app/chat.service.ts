@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
-  .withUrl("wss://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net/chat", {
+  .withUrl("https://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net/chat", {
     skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
   })

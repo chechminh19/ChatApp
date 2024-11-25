@@ -17,7 +17,7 @@ builder.Services.AddSignalR();
 builder.Services.AddSingleton<IDictionary<string, UserRoomConnect>>(opt => new Dictionary<string, UserRoomConnect>());
 builder.Services.AddCors(opt =>
 {
-    opt.AddDefaultPolicy(builder =>
+    options.AddPolicy("CorsPolicy", builder =>
     {
         builder.WithOrigins("https://chat-app-sandy-ten.vercel.app")
         .AllowAnyHeader()
@@ -41,16 +41,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseRouting();
-app.UseCors(
-//    builder =>
-//{
-//    builder.WithOrigins("https://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net")
-//    .AllowAnyHeader()
-//    .AllowAnyMethod();
-//}
-);
+app.UseCors("CorsPolicy");
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chat");

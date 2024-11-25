@@ -1,0 +1,24 @@
+{
+    "rewrites": [
+      {
+        "source": "/chat",
+        "destination": "https://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net/chat"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/chat",
+        "headers": [
+          {
+            "key": "Connection",
+            "value": "Upgrade"
+          },
+          {
+            "key": "Upgrade",
+            "value": "websocket"
+          }
+        ]
+      }
+    ]
+  }
+  
