@@ -15,6 +15,8 @@ export class ChatService {
   .configureLogging(signalR.LogLevel.Information)
   .build();
   
+
+
   public messages$ = new BehaviorSubject<any>([]);
   public connectedUsers$ = new BehaviorSubject<string[]>([]);
   public messages: any[] = [];
@@ -32,13 +34,13 @@ export class ChatService {
       this.connectedUsers$.next(users);
     });
    }
-  //start connection
-  public async start(){
+  // start connection
+  public async start() {
     try {
       await this.connection.start();
-      console.log("Connection is established!")
+      console.log("Connection is established!"); // Message when connection is successful
     } catch (error) {
-      console.log(error);
+      console.error("Error while starting connection: ", error); // Log any error during connection
     }
   }
   //Join Room

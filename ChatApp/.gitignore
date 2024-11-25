@@ -8,5 +8,14 @@
 *.exe
 *.bin
 
+# Bỏ qua tệp và thư mục Visual Studio
+.vs/
+*.suo
+*.user
+*.v2
+*.cache
+
 # Bỏ qua thư mục chứa tệp tạm thời
 temp/
+# Bỏ qua Docker ignore tệp
+.dockerignore
