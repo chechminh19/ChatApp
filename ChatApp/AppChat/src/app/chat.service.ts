@@ -45,9 +45,13 @@ export class ChatService {
         // Log chi tiết về lỗi
         if (error instanceof Error) {
             console.error("Error details:", error.message);
+            console.error("Stack trace:", error.stack);  // Thêm stack trace để debug dễ hơn
+        } else {
+            console.error("Unknown error:", error);
         }
     }
 }
+
   //Join Room
   public async joinRoom(user: string, room: string){
     return this.connection.invoke("JoinRoom", {user, room})
