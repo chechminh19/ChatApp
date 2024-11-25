@@ -55,6 +55,14 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chat");
 });
+app.Use(async (context, next) =>
+{
+    // Bắt đầu logging request
+    logger.LogInformation("Processing request: {Path}", context.Request.Path);
+    await next.Invoke();
+    // Kết thúc logging request
+    logger.LogInformation("Finished request with status code: {StatusCode}", context.Response.StatusCode);
+});
 app.MapControllers();
 
 app.Run();

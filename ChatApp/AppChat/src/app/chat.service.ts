@@ -36,13 +36,18 @@ export class ChatService {
    }
   // start connection
   public async start() {
+    console.log("Attempting to start connection...");
     try {
-      await this.connection.start();
-      console.log("Connection is established!"); // Message when connection is successful
+        await this.connection.start();
+        console.log("Connection is established!");
     } catch (error) {
-      console.error("Error while starting connection: ", error); // Log any error during connection
+        console.error("Error while starting connection: ", error);
+        // Log chi tiết về lỗi
+        if (error instanceof Error) {
+            console.error("Error details:", error.message);
+        }
     }
-  }
+}
   //Join Room
   public async joinRoom(user: string, room: string){
     return this.connection.invoke("JoinRoom", {user, room})
