@@ -9,7 +9,7 @@ export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
   .withUrl("https://chatappp-d8hqg8d0gpghhwgx.southeastasia-01.azurewebsites.net/chat", {
-    skipNegotiation: true,
+    skipNegotiation: false,
       transport: signalR.HttpTransportType.WebSockets
   })
   .configureLogging(signalR.LogLevel.Information)
