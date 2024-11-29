@@ -57,10 +57,22 @@ export class ChatService {
     return this.connection.invoke("JoinRoom", {user, room})
   }
   // Send Messages
-  public async sendMessage(message: string){
-    return this.connection
-    .invoke("SendMessage", message)
+  // public async sendMessage(message: string){
+  //   return this.connection
+  //   .invoke("SendMessage", message)
+  // }
+
+  public async sendMessage(message: string) {
+    console.log("Attempting to send message:", message);
+    try {
+      await this.connection.invoke("SendMessage", message);  // Gửi tin nhắn qua SignalR
+      console.log("Message sent successfully");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      throw error; // Ném lại lỗi nếu gửi không thành công
+    }
   }
+  
   //leave
   public async leaveChat(){
     return this.connection.stop();

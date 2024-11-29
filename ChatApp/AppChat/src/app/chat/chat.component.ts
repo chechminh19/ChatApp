@@ -34,25 +34,56 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
   }
 
+  // sendMessage() {
+  //   if (this.inputMessage && this.inputMessage.trim() != '') {
+  //     const arrayMessage = {
+  //       user: this.loggedInUserName,
+  //       message: this.inputMessage,   
+  //       room : this.currentRoomName   
+  //     };
+  //     if (!this.isRoomNameChanged) {
+  //       arrayMessage.room = this.currentRoomName;    
+  //     }
+  //     const messageContent = arrayMessage.message;
+  //     this.chatService.sendMessage(messageContent)
+  //     .then(()=>{
+  //       this.inputMessage = '';
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     }); 
+  //   }
+  // }
+
   sendMessage() {
-    if (this.inputMessage && this.inputMessage.trim() != '') {
+    if (this.inputMessage && this.inputMessage.trim() !== '') {  // Kiểm tra nếu tin nhắn không trống
       const arrayMessage = {
-        user: this.loggedInUserName,
-        message: this.inputMessage,   
-        room : this.currentRoomName   
+        user: this.loggedInUserName,  // Lấy tên người gửi từ session
+        message: this.inputMessage.trim(),  // Lấy nội dung tin nhắn, loại bỏ khoảng trắng thừa
+        room: this.currentRoomName   // Phòng mà người gửi tham gia
       };
+  
+      // Kiểm tra nếu phòng chưa thay đổi thì không cập nhật lại
       if (!this.isRoomNameChanged) {
         arrayMessage.room = this.currentRoomName;    
       }
-      const messageContent = arrayMessage.message;
-      this.chatService.sendMessage(messageContent)
-      .then(()=>{
-        this.inputMessage = '';
-      }).catch((error) => {
-        console.log(error);
-      }); 
+  
+      // Log tin nhắn trước khi gửi
+      console.log('Sending message:', arrayMessage);
+  
+      // Gửi tin nhắn qua service
+      this.chatService.sendMessage(arrayMessage.message)
+        .then(() => {
+          console.log('Message sent successfully');
+          this.inputMessage = '';  // Reset input message sau khi gửi
+        })
+        .catch((error) => {
+          console.error('Error while sending message:', error);
+        });
+    } else {
+      console.log('Input message is empty');
     }
   }
+  
 
   leaveChat() {
     this.chatService.leaveChat()
