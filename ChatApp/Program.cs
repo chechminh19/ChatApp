@@ -1,5 +1,6 @@
 ﻿using ChatApp;
 using ChatApp.Hubs;
+using Microsoft.Azure.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddSignalR()
     .AddAzureSignalR("Endpoint=https://siuuu.service.signalr.net;AccessKey=49DDe1FVOxoQndSGLADqfUJjAfWEBK10RusvziVevhhRymZc1VLDJQQJ99AKAC3pKaRXJ3w3AAAAASRSHv3C;Version=1.0;");
 builder.Services.AddSingleton<IDictionary<string, UserRoomConnect>>(opt => new Dictionary<string, UserRoomConnect>());
+builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
+
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("AllowMyOrigin", builder =>
