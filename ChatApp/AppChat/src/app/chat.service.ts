@@ -9,7 +9,7 @@ export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
   .withUrl("https://siuuu.service.signalr.net/chat", {
-    skipNegotiation: false,
+    skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
   })
   .configureLogging(signalR.LogLevel.Information)
