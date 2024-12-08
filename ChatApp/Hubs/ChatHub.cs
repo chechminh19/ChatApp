@@ -26,6 +26,7 @@ namespace ChatApp.Hubs
                 {                    
                     await Clients.Group(userRoomConnect.Room!)
                       .SendAsync("ReceiveMessage", userRoomConnect.User, mess, DateTime.Now, userRoomConnect.Room);
+                                     
                 }
             }
             catch (Exception ex)
@@ -34,25 +35,7 @@ namespace ChatApp.Hubs
                 throw;
             }
         }
-        //public async Task UploadImage(string fileData)
-        //{
-        //    try
-        //    {
-        //        if (_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoomConnect))
-        //        {
-        //            if (fileData != null)
-        //            {   
-        //                await Clients.Group(userRoomConnect.Room!)
-        //                     .SendAsync("ReceiveMessage", userRoomConnect.User, fileData, DateTime.Now, userRoomConnect.Room);
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.Error.WriteLine($"Error: {ex.Message}");
-        //        throw;
-        //    }
-        //}
+      
         public override Task OnDisconnectedAsync(Exception? exp)
         {            
             

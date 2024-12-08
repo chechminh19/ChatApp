@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
-  .withUrl("https://367c-2402-800-6310-b990-d097-d966-3c9a-ad89.ngrok-free.app/chat", {
+  .withUrl("http://localhost:5000/chat", {
     skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
   })
@@ -31,6 +31,7 @@ export class ChatService {
     });
 
     this.connection.on("ConnectedUser", (users: any)=>{
+      console.log("Connected users received:", users);
       this.connectedUsers$.next(users);
     });
    }
@@ -45,7 +46,7 @@ export class ChatService {
         // Log chi tiết về lỗi
         if (error instanceof Error) {
             console.error("Error details:", error.message);
-            console.error("Stack trace:", error.stack);  // Thêm stack trace để debug dễ hơn
+            console.error("Stack trace:", error.stack);
         } else {
             console.error("Unknown error:", error);
         }
@@ -54,23 +55,16 @@ export class ChatService {
 
   //Join Room
   public async joinRoom(user: string, room: string){
-    return this.connection.invoke("JoinRoom", {user, room})
-  }
-  // Send Messages
-  // public async sendMessage(message: string){
-  //   return this.connection
-  //   .invoke("SendMessage", message)
-  // }
-
-  public async sendMessage(message: string) {
-    console.log("Attempting to send message:", message);
     try {
-      await this.connection.invoke("SendMessage", message);  // Gửi tin nhắn qua SignalR
-      console.log("Message sent successfully");
+      await this.connection.invoke("JoinRoom", { user, room });
+      console.log(`Joined room: ${room}`);
     } catch (error) {
-      console.error("Error sending message:", error);
-      throw error; // Ném lại lỗi nếu gửi không thành công
+      console.error("Error joining room:", error);
     }
+  }
+  //send
+  public async sendMessage(message: string) {  
+    return this.connection.invoke("SendMessage", message);
   }
   
   //leave

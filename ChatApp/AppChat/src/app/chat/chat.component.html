@@ -11,14 +11,14 @@
                     <div class="inbox-type">
                         <div class="mesgs">
                             <div #scrollMe class="msg_history">
-                                <ng-container *ngFor="let message of this.chatService.messages$ | async">
-                                    <div
-                                        [ngClass]="{'incoming_msg': message.user !== loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
+                                <ng-container *ngFor="let message of this.chatService.messages">
+                                    <!-- <div
+                                        [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
                                         <div *ngIf="message.user !== loggedInUserName" class="incoming_msg_img">
                                             <img src="https://ptetutorials.com/images/user-profile.png">
                                         </div>
 
-                                        <div *ngIf="message.user !== loggedInUserName" class="received_msg">
+                                        <div *ngIf="message.user != loggedInUserName" class="received_msg">
                                             <div class="received_width_msg">
                                                 <p>{{message.message}}</p>
                                                 <span class="time_date">{{message.user}} | {{message.messageTime |
@@ -32,7 +32,24 @@
                                                 date:'medium'}}</span>
                                         </div>
 
-                                    </div>
+                                    </div> -->
+                                    <div [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
+                                        <div *ngIf="message.user != loggedInUserName" class="incoming_msg_img">
+                                          <img src="https://ptetutorials.com/images/user-profile.png">
+                                        </div>
+              
+                                        <div *ngIf="message.user != loggedInUserName" class="received_msg">
+                                          <div class="received_withd_msg">
+                                              <p>{{message.message}}</p> 
+                                              <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                                                               
+                                          </div>
+                                        </div>    
+                                                              
+                                        <div *ngIf="message.user === loggedInUserName" class="sent_msg">                    
+                                          <p>{{message.message}}</p>
+                                          <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                            
+                                        </div>     
+                                      </div>
                                 </ng-container>
                             </div>
                             <div class="type_msg">
@@ -81,14 +98,14 @@
                         </div>
 
                         <div #scrollUser class="inbox_chat">
-                            <ng-container *ngFor="let usera of this.chatService.connectedUsers$ | async">
+                            <ng-container *ngFor="let user of this.chatService.connectedUsers$ | async">
                                 <div class="chat_list">
                                     <div class="chat_people">
                                         <div class="chat_img"><img
                                                 src="https://ptetutorials.com/images/user-profile.png" alt="">
                                         </div>
                                         <div class="chat_ib">
-                                            <h5>{{usera}}</h5>
+                                            <h5>{{user}}<span class="online"></span></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -97,6 +114,8 @@
 
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>

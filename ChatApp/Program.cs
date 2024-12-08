@@ -23,7 +23,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("AllowMyOrigin", builder =>
     {
-        builder.WithOrigins("https://chat-app-sandy-ten.vercel.app")
+        builder.WithOrigins("http://localhost:4200")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();

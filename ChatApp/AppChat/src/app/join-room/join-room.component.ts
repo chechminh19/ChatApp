@@ -23,16 +23,23 @@ export class JoinRoomComponent implements OnInit {
     get user() {
       return this.joinRoomForm.get('user');
     }
+    get room() {
+      return this.joinRoomForm.get('room');
+    }
+    
+    joinRoom(){ 
+      const { user, room } = this.joinRoomForm.value;
+  sessionStorage.setItem("user", user);
+  sessionStorage.setItem("room", room);
+  console.log('Joining room with:', { user, room }); // Thêm log
 
-    joinRoom(){
-      
-      const {user, room} = this.joinRoomForm.value;
-      sessionStorage.setItem("user", user);
-      this.chatService.joinRoom(user, room).then(()=>{
-        this.router.navigate(['chat']);
-      }).catch((error)=>{
-        console.error;
-      })      
+  this.chatService.joinRoom(user, room)
+    .then(() => {
+      this.router.navigate(['chat']);
+    })
+    .catch((error) => {
+      console.error('Join room failed:', error);
+    });
     }
 }
     

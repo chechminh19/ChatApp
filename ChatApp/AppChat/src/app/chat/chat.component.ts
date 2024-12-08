@@ -15,18 +15,27 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   messages: any[] = [];
   router = inject(Router);
   loggedInUserName = sessionStorage.getItem("user");
-  currentRoomName : string = '';
+  currentRoomName = sessionStorage.getItem("room");
   isRoomNameChanged: boolean = false; 
-  fileUrl: string = '';
   @ViewChild('scrollMe') private scrollContainer!: ElementRef;
 
 
   ngOnInit(): void {
     this.chatService.messages$.subscribe(res => {
+      console.log('Received messages:', res); // Log toàn bộ dữ liệu nhận được
       this.messages = res;
-      this.currentRoomName = this.messages[0]?.room || '';
-      this.isRoomNameChanged = this.currentRoomName !== undefined;
-      console.log(this.messages)
+      // this.currentRoomName = this.messages[0]?.room || '';
+      // this.isRoomNameChanged = this.currentRoomName !== undefined;
+      // console.log(this.messages);
+      // console.log('Current Room:', this.currentRoomName); // Log room để kiểm tra
+      if (res.length > 0) {
+        const newRoom = res[0]?.room || '';
+        if (newRoom && newRoom !== this.currentRoomName) {
+          this.currentRoomName = newRoom;
+          this.isRoomNameChanged = true;
+          console.log('Updated Current Room:', this.currentRoomName);
+        }
+      }
     });
   }  
   
@@ -34,57 +43,28 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
   }
 
-  // sendMessage() {
-  //   if (this.inputMessage && this.inputMessage.trim() != '') {
-  //     const arrayMessage = {
-  //       user: this.loggedInUserName,
-  //       message: this.inputMessage,   
-  //       room : this.currentRoomName   
-  //     };
-  //     if (!this.isRoomNameChanged) {
-  //       arrayMessage.room = this.currentRoomName;    
-  //     }
-  //     const messageContent = arrayMessage.message;
-  //     this.chatService.sendMessage(messageContent)
-  //     .then(()=>{
-  //       this.inputMessage = '';
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     }); 
-  //   }
-  // }
-
   sendMessage() {
-    if (this.inputMessage && this.inputMessage.trim() !== '') {  // Kiểm tra nếu tin nhắn không trống
+    
+    if (this.inputMessage && this.inputMessage.trim() !== '') {
       const arrayMessage = {
-        user: this.loggedInUserName,  // Lấy tên người gửi từ session
-        message: this.inputMessage.trim(),  // Lấy nội dung tin nhắn, loại bỏ khoảng trắng thừa
-        room: this.currentRoomName   // Phòng mà người gửi tham gia
+        user: this.loggedInUserName,
+        message: this.inputMessage.trim(),
+        room: this.currentRoomName
       };
   
-      // Kiểm tra nếu phòng chưa thay đổi thì không cập nhật lại
-      if (!this.isRoomNameChanged) {
-        arrayMessage.room = this.currentRoomName;    
-      }
-  
-      // Log tin nhắn trước khi gửi
       console.log('Sending message:', arrayMessage);
   
-      // Gửi tin nhắn qua service
       this.chatService.sendMessage(arrayMessage.message)
         .then(() => {
           console.log('Message sent successfully');
-          this.inputMessage = '';  // Reset input message sau khi gửi
+          this.inputMessage = '';
         })
         .catch((error) => {
-          console.error('Error while sending message:', error);
+          console.error('Error sending message:', error);
         });
-    } else {
-      console.log('Input message is empty');
     }
   }
   
-
   leaveChat() {
     this.chatService.leaveChat()
       .then(() => {
