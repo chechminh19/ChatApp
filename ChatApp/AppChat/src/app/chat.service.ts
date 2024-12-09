@@ -22,13 +22,10 @@ export class ChatService {
   public rooms: string[] =[];
   constructor() {
     this.start();
-    this.connection.on("ReceiveMessage", (user: string, message: string, messageTime: string, room: string) => {
-      console.log("New message received:", { user, message, messageTime, room });
-      
+    this.connection.on("ReceiveMessage", (user: string, message: string, messageTime: string, room: string) => {   
       // Tạo đối tượng message mới
       const updateMess = { user, message, messageTime, room };
-      
-    
+
   // Thêm tin nhắn mới vào mảng messages
   this.messages = [...this.messages, updateMess]; // Cập nhật mảng với đối tượng tin nhắn mới
 
@@ -36,12 +33,15 @@ export class ChatService {
   this.messages$.next(this.messages);  // Truyền mảng messages đã cập nhật cho BehaviorSubject
   });
   
-  
-
-    this.connection.on("ConnectedUser", (users: any)=>{
-      console.log("Connected users received:", users);
-      this.connectedUsers$.next(users);
+    this.connection.on("ConnectedUsers", (users: string[])=>{
+      try {
+        console.log("Connected users received:", users);
+        this.connectedUsers$.next(users);
+    } catch (error) {
+        console.error("Error handling ConnectedUsers event: ", error);
+    }
     });
+  
    }
   // start connection
   public async start() {
@@ -71,7 +71,7 @@ export class ChatService {
     }
   }
   //send
-  public async sendMessage(user: string, message: string, room: string) {  
+  public async sendMessage(user: string, message: string) {  
     try {
       // Gửi tin nhắn qua SignalR
       await this.connection.invoke("SendMessage", message);
@@ -81,7 +81,7 @@ export class ChatService {
         user: user,               // Sử dụng tên người dùng hiện tại
         message: message, 
         messageTime: new Date().toISOString(), 
-        room: room                // Sử dụng phòng hiện tại
+              // Sử dụng phòng hiện tại
       };
       
       // Thêm tin nhắn đã gửi vào mảng

@@ -12,12 +12,12 @@
                         <div class="mesgs">
                             <div #scrollMe class="msg_history">
                                 <ng-container *ngFor="let message of this.chatService.messages$ | async">
-                                    <div [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
+                                    <div [ngClass]="{'incoming_msg': message.user !== loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
                                         <div *ngIf="message.user != loggedInUserName" class="incoming_msg_img">
                                           <img src="https://ptetutorials.com/images/user-profile.png">
                                         </div>
               
-                                        <div *ngIf="message.user != loggedInUserName" class="received_msg">
+                                        <div *ngIf="message.user !== loggedInUserName" class="received_msg">
                                           <div class="received_withd_msg">
                                               <p>{{message.message}}</p> 
                                               <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                                                               
@@ -54,14 +54,14 @@
                         </div>
 
                         <div #scrollUser class="inbox_chat">
-                            <ng-container *ngFor="let user of this.chatService.connectedUsers$ | async">
+                            <ng-container *ngFor="let useraa of this.chatService.connectedUsers$ | async">
                                 <div class="chat_list">
                                     <div class="chat_people">
                                         <div class="chat_img"><img
-                                                src="https://ptetutorials.com/images/user-profile.png" alt="">
+                                                src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
                                         </div>
-                                        <div class="chat_ib">
-                                            <h5>{{user}}<span class="online"></span></h5>
+                                        <div class="chat_ib mt-3">
+                                            <h5>{{ useraa }}<span class="online"></span></h5>
                                         </div>
                                     </div>
                                 </div>

@@ -10,6 +10,8 @@ import { ChatService } from '../chat.service';
 })
 export class JoinRoomComponent implements OnInit {
     
+  roomname: string = ''; // Biến lưu trữ tên phòng
+  rooms: string[] = [];  // Danh sách các phòng đã tồn tại
     joinRoomForm!: FormGroup;
     fb = inject(FormBuilder);
     router = inject(Router);
@@ -23,17 +25,15 @@ export class JoinRoomComponent implements OnInit {
     get user() {
       return this.joinRoomForm.get('user');
     }
-    get room() {
-      return this.joinRoomForm.get('room');
-    }
+   
     
     joinRoom(){ 
       const { user, room } = this.joinRoomForm.value;
-  sessionStorage.setItem("user", user);
-  sessionStorage.setItem("room", room);
-  console.log('Joining room with:', { user, room }); // Thêm log
+    sessionStorage.setItem("user", user);
+    sessionStorage.setItem("room", room);
+    console.log('Joining room with:', { user, room }); // Thêm log
 
-  this.chatService.joinRoom(user, room)
+     this.chatService.joinRoom(user, room)
     .then(() => {
       this.router.navigate(['chat']);
     })

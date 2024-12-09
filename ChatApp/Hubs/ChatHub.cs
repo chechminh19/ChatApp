@@ -16,6 +16,7 @@ namespace ChatApp.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, userRoomConnect.Room!);            
             _connect[Context.ConnectionId] = userRoomConnect;
             await Clients.Group(userRoomConnect.Room!).SendAsync("ReceiveMessage", $"{userRoomConnect.User}", $"{userRoomConnect.User} has joined",DateTime.Now,$"{userRoomConnect.Room}");
+            Console.WriteLine($"Calling SendConnectedUser for room {userRoomConnect.Room}");
             await SendConnectedUser(userRoomConnect.Room!);
         }
         public async Task SendMessage(string mess)
@@ -53,7 +54,8 @@ namespace ChatApp.Hubs
         public Task SendConnectedUser(string room)
         {
             var listt = _connect.Values.Where(r => r.Room == room).Select(r => r.User).ToList();
-            return Clients.Group(room).SendAsync("ConnectedUser", listt);
+            Console.WriteLine($"Sending connected users to room {room}: {string.Join(", ", listt)}"); // Log danh sách người dùng
+            return Clients.Group(room).SendAsync("ConnectedUsers", listt); // Gửi dữ liệu tới nhóm
         }
     }
 }

@@ -8,31 +8,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, AfterViewChecked {
-
-
   chatService = inject(ChatService);
   inputMessage = "";
   messages: any[] = [];
   router = inject(Router);
   loggedInUserName = sessionStorage.getItem("user");
-  currentRoomName = sessionStorage.getItem("room") ?? "Default";
+  currentRoomName : string = '';
   isRoomNameChanged: boolean = false; 
   @ViewChild('scrollMe') private scrollContainer!: ElementRef;
 
 
   ngOnInit(): void {
-    console.log('ngOnInit is called');  // Kiểm tra xem ngOnInit có được gọi không
-    this.chatService.messages$.subscribe(res => {
-      console.log('Received messages:', res); // Log toàn bộ dữ liệu nhận được
-      this.messages = res;    
-      if (res.length > 0) {
-        const newRoom = res[0]?.room || '';
-        if (newRoom && newRoom !== this.currentRoomName) {
-          this.currentRoomName = newRoom;
-          this.isRoomNameChanged = true;
-        }
+    const roomNameFromStorage = sessionStorage.getItem("room");
+  if (roomNameFromStorage) {
+    this.currentRoomName = roomNameFromStorage;  // Lấy tên phòng từ sessionStorage
+  }
+
+  this.chatService.messages$.subscribe(res => {
+    console.log('Received messages:', res); // Log toàn bộ dữ liệu nhận được
+    this.messages = res;    
+    if (res.length > 0) {
+      const newRoom = res[0]?.room || '';
+      if (newRoom && newRoom !== this.currentRoomName) {
+        this.currentRoomName = newRoom;
+        this.isRoomNameChanged = true;
       }
-    });
+    }
+  });
   }
    
   
@@ -42,10 +44,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   sendMessage() {
     if (this.inputMessage && this.inputMessage.trim() !== '') {
-      console.log('Sending message:', this.inputMessage);
-  
+      const arrayMessage = {
+        user: this.loggedInUserName,
+        message: this.inputMessage,   
+        room : this.currentRoomName   
+      };
+      if (!this.isRoomNameChanged) {
+        arrayMessage.room = this.currentRoomName;    
+      }
       // Gọi đến sendMessage với user, message và room
-      this.chatService.sendMessage(this.loggedInUserName as string, this.inputMessage.trim(), this.currentRoomName)
+      this.chatService.sendMessage(this.loggedInUserName as string, this.inputMessage.trim())
         .then(() => {
           console.log('Message sent successfully');
           this.inputMessage = ''; // Reset input message sau khi gửi
@@ -57,6 +65,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
   
   leaveChat() {
+     // Xóa sessionStorage khi người dùng rời khỏi phòng chat
+  sessionStorage.removeItem("user");
+  sessionStorage.removeItem("room");
     this.chatService.leaveChat()
       .then(() => {
         this.router.navigate(['welcome']);
