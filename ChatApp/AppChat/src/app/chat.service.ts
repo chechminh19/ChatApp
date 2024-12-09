@@ -14,21 +14,29 @@ export class ChatService {
   })
   .configureLogging(signalR.LogLevel.Information)
   .build();
-  
 
-
-  public messages$ = new BehaviorSubject<any>([]);
+  public messages$ = new BehaviorSubject<any[]>([]);
   public connectedUsers$ = new BehaviorSubject<string[]>([]);
   public messages: any[] = [];
   public users: string[] = [];
   public rooms: string[] =[];
   constructor() {
     this.start();
-    this.connection.on("ReceiveMessage", (user: string, message: string, messageTime: string, room: string)=>{
-      const updateMess = {user, message, messageTime, room}
-      this.messages = [...this.messages, updateMess ];
-      this.messages$.next(this.messages);
-    });
+    this.connection.on("ReceiveMessage", (user: string, message: string, messageTime: string, room: string) => {
+      console.log("New message received:", { user, message, messageTime, room });
+      
+      // Tạo đối tượng message mới
+      const updateMess = { user, message, messageTime, room };
+      
+    
+  // Thêm tin nhắn mới vào mảng messages
+  this.messages = [...this.messages, updateMess]; // Cập nhật mảng với đối tượng tin nhắn mới
+
+  // Cập nhật BehaviorSubject
+  this.messages$.next(this.messages);  // Truyền mảng messages đã cập nhật cho BehaviorSubject
+  });
+  
+  
 
     this.connection.on("ConnectedUser", (users: any)=>{
       console.log("Connected users received:", users);
@@ -63,8 +71,25 @@ export class ChatService {
     }
   }
   //send
-  public async sendMessage(message: string) {  
-    return this.connection.invoke("SendMessage", message);
+  public async sendMessage(user: string, message: string, room: string) {  
+    try {
+      // Gửi tin nhắn qua SignalR
+      await this.connection.invoke("SendMessage", message);
+  
+      // Tạo đối tượng cho tin nhắn đã gửi
+      const sentMessage = { 
+        user: user,               // Sử dụng tên người dùng hiện tại
+        message: message, 
+        messageTime: new Date().toISOString(), 
+        room: room                // Sử dụng phòng hiện tại
+      };
+      
+      // Thêm tin nhắn đã gửi vào mảng
+      this.messages.push(sentMessage); 
+      this.messages$.next(this.messages);  // Cập nhật BehaviorSubject
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
   }
   
   //leave

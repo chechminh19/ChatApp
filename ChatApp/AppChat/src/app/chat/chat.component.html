@@ -11,28 +11,7 @@
                     <div class="inbox-type">
                         <div class="mesgs">
                             <div #scrollMe class="msg_history">
-                                <ng-container *ngFor="let message of this.chatService.messages">
-                                    <!-- <div
-                                        [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
-                                        <div *ngIf="message.user !== loggedInUserName" class="incoming_msg_img">
-                                            <img src="https://ptetutorials.com/images/user-profile.png">
-                                        </div>
-
-                                        <div *ngIf="message.user != loggedInUserName" class="received_msg">
-                                            <div class="received_width_msg">
-                                                <p>{{message.message}}</p>
-                                                <span class="time_date">{{message.user}} | {{message.messageTime |
-                                                    date:'medium'}}</span>
-                                            </div>
-                                        </div>
-
-                                        <div *ngIf="message.user === loggedInUserName" class="sent_msg">
-                                            <p>{{message.message}}</p>
-                                            <span class="time_date">{{message.user}} | {{message.messageTime |
-                                                date:'medium'}}</span>
-                                        </div>
-
-                                    </div> -->
+                                <ng-container *ngFor="let message of this.chatService.messages$ | async">
                                     <div [ngClass]="{'incoming_msg': message.user != loggedInUserName, 'outgoing_msg': message.user === loggedInUserName}">
                                         <div *ngIf="message.user != loggedInUserName" class="incoming_msg_img">
                                           <img src="https://ptetutorials.com/images/user-profile.png">
@@ -63,30 +42,7 @@
                         </div>
                     </div>
 
-                    <!-- <div *ngIf="message.user !== loggedInUserName" class="received_msg">
-                        <div class="received_width_msg">
-                            <ng-container *ngIf="message.imageUrl; else textContent">
-                                <img [src]="message.imageUrl" alt="Image">
-                            </ng-container>
-                            <ng-template #textContent>
-                                <p>{{message.message}}</p>
-                            </ng-template>
-                            <span class="time_date">{{message.user}} | {{message.messageTime | date:'medium'}}</span>
-                        </div>
-                    </div>
-        
-                    <div *ngIf="message.user === loggedInUserName" class="sent_msg">
-                        <div class="sent_width_msg">
-                            <ng-container *ngIf="message.imageUrl; else sentTextContent">
-                                <img [src]="message.imageUrl" alt="Image">
-                            </ng-container>
-                            <ng-template #sentTextContent>
-                                <p>{{message.message}}</p>
-                            </ng-template>
-                            <span class="time_date">{{message.user}} | {{message.messageTime | date:'medium'}}</span>
-                        </div>
-                    </div> -->
-
+                   
                 </div>
                 <div class="col-4">
                     <div class="inbox-people">

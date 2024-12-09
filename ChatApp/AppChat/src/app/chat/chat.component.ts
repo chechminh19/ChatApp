@@ -15,49 +15,40 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   messages: any[] = [];
   router = inject(Router);
   loggedInUserName = sessionStorage.getItem("user");
-  currentRoomName = sessionStorage.getItem("room");
+  currentRoomName = sessionStorage.getItem("room") ?? "Default";
   isRoomNameChanged: boolean = false; 
   @ViewChild('scrollMe') private scrollContainer!: ElementRef;
 
 
   ngOnInit(): void {
+    console.log('ngOnInit is called');  // Kiểm tra xem ngOnInit có được gọi không
     this.chatService.messages$.subscribe(res => {
       console.log('Received messages:', res); // Log toàn bộ dữ liệu nhận được
-      this.messages = res;
-      // this.currentRoomName = this.messages[0]?.room || '';
-      // this.isRoomNameChanged = this.currentRoomName !== undefined;
-      // console.log(this.messages);
-      // console.log('Current Room:', this.currentRoomName); // Log room để kiểm tra
+      this.messages = res;    
       if (res.length > 0) {
         const newRoom = res[0]?.room || '';
         if (newRoom && newRoom !== this.currentRoomName) {
           this.currentRoomName = newRoom;
           this.isRoomNameChanged = true;
-          console.log('Updated Current Room:', this.currentRoomName);
         }
       }
     });
-  }  
+  }
+   
   
   ngAfterViewChecked(): void {
     this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
   }
 
   sendMessage() {
-    
     if (this.inputMessage && this.inputMessage.trim() !== '') {
-      const arrayMessage = {
-        user: this.loggedInUserName,
-        message: this.inputMessage.trim(),
-        room: this.currentRoomName
-      };
+      console.log('Sending message:', this.inputMessage);
   
-      console.log('Sending message:', arrayMessage);
-  
-      this.chatService.sendMessage(arrayMessage.message)
+      // Gọi đến sendMessage với user, message và room
+      this.chatService.sendMessage(this.loggedInUserName as string, this.inputMessage.trim(), this.currentRoomName)
         .then(() => {
           console.log('Message sent successfully');
-          this.inputMessage = '';
+          this.inputMessage = ''; // Reset input message sau khi gửi
         })
         .catch((error) => {
           console.error('Error sending message:', error);
