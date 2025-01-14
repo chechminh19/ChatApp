@@ -18,15 +18,15 @@
                                         </div>
               
                                         <div *ngIf="message.user !== loggedInUserName" class="received_msg">
-                                          <div class="received_withd_msg">
-                                              <p>{{message.message}}</p> 
-                                              <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                                                               
+                                          <div class="received_width_msg">
+                                            <span class="time_date">{{message.user}}</span> 
+                                              <p>{{message.message}}</p>                                                                                                            
                                           </div>
                                         </div>    
                                                               
-                                        <div *ngIf="message.user === loggedInUserName" class="sent_msg">                    
-                                          <p>{{message.message}}</p>
-                                          <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>                            
+                                        <div *ngIf="message.user === loggedInUserName" class="sent_msg">                
+                                          <!-- <span class="time_date">{{message.user}} | {{message.messageTime | date: 'medium'}}</span>        -->
+                                          <p>{{message.message}}</p>                                                                     
                                         </div>     
                                       </div>
                                 </ng-container>
@@ -55,13 +55,17 @@
 
                         <div #scrollUser class="inbox_chat">
                             <ng-container *ngFor="let useraa of this.chatService.connectedUsers$ | async">
-                                <div class="chat_list">
+                                <div class="chat_list" [ngClass]="{'active_user': useraa === loggedInUserName}">
                                     <div class="chat_people">
                                         <div class="chat_img"><img
                                                 src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
                                         </div>
-                                        <div class="chat_ib mt-3">
-                                            <h5>{{ useraa }}<span class="online"></span></h5>
+                                        <div class="chat_ib mt-1">
+                                            <h5>
+                                                {{ useraa }}
+                                                <span *ngIf="useraa === loggedInUserName" class="is-you"> is You</span>
+                                                <span class="online"></span>
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>

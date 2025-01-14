@@ -22,7 +22,7 @@ namespace ChatApp.Hubs
         public async Task SendMessage(string mess)
         {
             try
-            {
+            {              
                 if (_connect.TryGetValue(Context.ConnectionId, out UserRoomConnect userRoomConnect))
                 {                    
                     await Clients.Group(userRoomConnect.Room!)

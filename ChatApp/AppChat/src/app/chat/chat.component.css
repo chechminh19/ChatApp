@@ -120,7 +120,7 @@ img{
 .chat_ib h5 {
     font-size: 16px;
     color: #464646;
-    margin:  3px 3px 3px 3px;
+    margin:  5px 3px 5px 3px;
 }
 .chat_ib h5 span {
     color: #52ACFF;
@@ -137,16 +137,18 @@ img{
 .chat_ib p {
     font-size: 15px;
     color: #989898;
-    margin: auto;
+    margin-bottom: 5px;
 }
 .chat_img{
     float: left;
     width: 11%;
+    padding-top: 2px;
 }
 .chat_ib{
     float: left;
-    padding: 0 0 0 15px;
+    padding: 0 0 0 5px;
     width: 88%;
+    margin-top: 2px;
 }
 
 .chat_list{
@@ -186,7 +188,9 @@ img{
 {
     display: inline-block;
     width: 6%;
+    margin-top: 20px;
 }
+
 .received_msg{
     display: inline-block;
     padding: 0;
@@ -195,7 +199,7 @@ img{
 }
 
 .received_width_msg p {
-    background: #05728f none repeat scroll 0 0;
+    background: #80c7f7;
     border-radius: 5px;
     font-size: 13px;
     margin: 0;
@@ -225,7 +229,7 @@ img{
 }
 
 .sent_msg p {
-    background: #05728f none repeat scroll 0 0;
+    background: linear-gradient(to right, #05728f, #28a745);
     border-radius: 5px;
     font-size: 13px;
     margin: 0;
@@ -237,6 +241,12 @@ img{
 .outgoing_msg{
     overflow: hidden;
     margin: 5px 0 5px;
+    
+}
+.outgoing_msg_img{
+    display: inline-block;
+    width: 6%;
+    margin-top: 20px;
 }
 .sent_msg, .received_msg {
     padding: 3px;
@@ -305,6 +315,24 @@ img{
     background-color: #f4f4f4;
     overflow-y: auto;
     margin-bottom: auto; 
+}
+.active_user {
+    background: #fff;
+    font-weight: bold; /* Để làm nổi bật người dùng */
+}
+h5 {
+    display: flex;
+    align-items: center;
+}
+
+.is-you {
+    font-weight: normal; /* Làm chữ không quá nổi bật */
+    margin-left: 5px; /* Khoảng cách nhỏ giữa tên và chữ "is you" */
+    color: gray; /* Bạn có thể đổi màu nếu muốn */
+}
+
+.online {
+    margin-left: auto; /* Đẩy phần tử "online" sang bên phải */
 }
 
 

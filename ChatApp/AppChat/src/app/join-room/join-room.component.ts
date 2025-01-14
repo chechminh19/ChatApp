@@ -18,7 +18,7 @@ export class JoinRoomComponent implements OnInit {
     chatService = inject(ChatService);
     ngOnInit(): void {
       this.joinRoomForm = this.fb.group({
-        user: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+        user: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(20)]],
         room: ['', Validators.required]
       })
     }
