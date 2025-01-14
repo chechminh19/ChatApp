@@ -43,7 +43,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   sendMessage() {
-    if (this.inputMessage && this.inputMessage.trim() !== '') {
+    if (!this.inputMessage || this.inputMessage.trim() !== "") {
       const arrayMessage = {
         user: this.loggedInUserName,
         message: this.inputMessage,   
@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         arrayMessage.room = this.currentRoomName;    
       }
       // Gọi đến sendMessage với user, message và room
-      this.chatService.sendMessage(this.loggedInUserName as string, this.inputMessage.trim())
+      this.chatService.sendMessage(this.loggedInUserName as string, this.inputMessage.trim(), this.currentRoomName)
         .then(() => {
           console.log('Message sent successfully');
           this.inputMessage = ''; // Reset input message sau khi gửi

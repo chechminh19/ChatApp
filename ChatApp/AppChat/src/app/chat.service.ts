@@ -71,21 +71,21 @@ export class ChatService {
     }
   }
   //send
-  public async sendMessage(user: string, message: string) {  
+  public async sendMessage(user: string, message: string, room: string) {  
     try {
       // Gửi tin nhắn qua SignalR
       await this.connection.invoke("SendMessage", message);
   
       // Tạo đối tượng cho tin nhắn đã gửi
-      const sentMessage = { 
-        user: user,               // Sử dụng tên người dùng hiện tại
-        message: message, 
-        messageTime: new Date().toISOString(), 
-              // Sử dụng phòng hiện tại
-      };
+      // const sentMessage = { 
+      //   user: user,               // Sử dụng tên người dùng hiện tại
+      //   message: message, 
+      //   messageTime: new Date().toISOString(), 
+      //         // Sử dụng phòng hiện tại
+      // };
       
       // Thêm tin nhắn đã gửi vào mảng
-      this.messages.push(sentMessage); 
+      this.messages.push(message); 
       this.messages$.next(this.messages);  // Cập nhật BehaviorSubject
     } catch (error) {
       console.error("Error sending message:", error);

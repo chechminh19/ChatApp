@@ -14,8 +14,8 @@ builder.Services.AddSwaggerGen(c =>
     // Tùy chọn cho Swagger xuất
     c.SwaggerDoc("v1", new() { Title = "Chat App API", Version = "v1" });
 });
-builder.Services.AddSignalR()
-    .AddAzureSignalR("Endpoint=https://siuuu.service.signalr.net;AccessKey=49DDe1FVOxoQndSGLADqfUJjAfWEBK10RusvziVevhhRymZc1VLDJQQJ99AKAC3pKaRXJ3w3AAAAASRSHv3C;Version=1.0;");
+builder.Services.AddSignalR();
+    
 builder.Services.AddSingleton<IDictionary<string, UserRoomConnect>>(opt => new Dictionary<string, UserRoomConnect>());
 builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Debug);
 
