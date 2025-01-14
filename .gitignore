@@ -1,0 +1,31 @@
+# Bỏ qua tất cả các file .vsidx
+*.vsidx
+
+# Bỏ qua thư mục .vs và các tệp liên quan
+.vs/
+*.suo
+*.user
+
+# Bỏ qua tất cả các file nhị phân (nếu cần)
+*.exe
+*.bin
+
+# Bỏ qua các tệp Visual Studio tạm thời
+*.cache
+*.pdb
+*.ilk
+*.lib
+*.obj
+
+# Bỏ qua thư mục chứa tệp tạm thời
+temp/
+# Bỏ qua các tệp lock
+package-lock.json
+yarn.lock
+
+# Bỏ qua thư mục có tệp nhị phân cùng với thông tin biên dịch
+obj/
+bin/
+
+# Bỏ qua Docker ignore tệp
+.dockerignore
