@@ -1,15 +1,24 @@
 .container {
+    width: 90%;
+
+
     max-width: 1200px;
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 0px;
-    padding: 20px;   
-    
+    padding: 20px;     
     border-radius: 40px; /* Làm cho góc trở nên bo tròn */     
     background-image: linear-gradient(to right, #4FACFE, #F4D03F);
     
 }
-
+/* Mobile (dưới 768px) */
+@media (max-width: 768px) {
+    .container {
+        width: 95%; /* Giữ kích thước nhỏ hơn */
+        padding: 15px;
+        border-radius: 20px; /* Giảm bo góc trên mobile */
+    }
+}
 .chat_header {
     display: flex;
     justify-content: space-between;
