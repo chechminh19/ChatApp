@@ -1,6 +1,0 @@
-services:
-  - name: chatapp
-    type: web
-    env: dotnet
-    buildCommand: "dotnet publish -c Release -o out"
-    startCommand: "dotnet out/ChatApp.dll"
