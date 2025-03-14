@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: signalr-chat-be
+    env: dotnet
+    buildCommand: dotnet publish -c Release
+    startCommand: dotnet ./bin/Release/net8.0/publish/ChatApp.dll
+    plan: free
+    envVars:
+      - key: PORT
+        value: 10000
