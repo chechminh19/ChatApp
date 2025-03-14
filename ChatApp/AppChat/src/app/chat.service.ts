@@ -9,8 +9,8 @@ export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
   //.withUrl("http://localhost:5000/chat", {
-    .withUrl("https://bcb2-2402-800-6310-3a12-d8c3-cf4e-cbf8-9ee6.ngrok-free.app/chat", {
-    //skipNegotiation: true,
+    .withUrl("http://0.0.0.0:10000/chat", {
+    skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
   })
   .configureLogging(signalR.LogLevel.Information)
