@@ -1,4 +1,5 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import 'zone.js'; // Required for Angular
 
 import { AppModule } from './app/app.module';
 
