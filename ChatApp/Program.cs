@@ -43,9 +43,6 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty; // Thiết lập Swagger UI xuất hiện tại root
     });
 }
-
-app.UseHttpsRedirection();
-
 app.UseRouting();
 app.UseCors("AllowMyOrigin"); 
 app.UseEndpoints(endpoints =>
@@ -53,7 +50,9 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHub<ChatHub>("/chat");
 });
-// Lấy PORT từ biến môi trường (Render yêu cầu)
+// **Đọc PORT từ biến môi trường Render**
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
-// Lắng nghe trên tất cả địa chỉ IP (`0.0.0.0`)
-app.Run($"http://0.0.0.0:{port}");
+app.Urls.Add($"http://0.0.0.0:{port}");
+
+// Chạy ứng dụng
+app.Run();
