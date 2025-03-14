@@ -9,7 +9,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
 
-# **Expose cổng để đảm bảo Render có thể kết nối**
+# **EXPOSE cổng để Render tự động nhận diện**
 EXPOSE 10000
 
 ENTRYPOINT ["dotnet", "ChatApp.dll"]

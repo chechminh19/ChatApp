@@ -50,9 +50,9 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHub<ChatHub>("/chat");
 });
-// **Đọc PORT từ biến môi trường Render**
+// **ÉP ỨNG DỤNG CHẠY TRÊN CỔNG ĐƯỢC CẤP TỪ RENDER**
 var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+app.Urls.Clear(); // Xóa URL cũ
 app.Urls.Add($"http://0.0.0.0:{port}");
 
-// Chạy ứng dụng
 app.Run();
