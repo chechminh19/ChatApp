@@ -30,7 +30,7 @@ builder.Services.AddCors(opt =>
         .AllowCredentials();
     });
 });
-var port = Environment.GetEnvironmentVariable("PORT") ?? "10000"; // Render yêu cầu PORT từ ENV
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
 
 var app = builder.Build();
 
