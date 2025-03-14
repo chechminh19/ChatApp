@@ -52,7 +52,9 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chat");
 });
-
+// Lấy cổng từ biến môi trường PORT, mặc định là 5000 nếu không có
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Run($"http://0.0.0.0:{port}");
 app.MapControllers();
 
 app.Run();
