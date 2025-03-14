@@ -9,8 +9,9 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/out .
 
-# Định nghĩa cổng chạy
-ENV ASPNETCORE_URLS=http://+:10000
+# Cho phép đọc PORT từ ENV khi chạy container
+ENV PORT=10000
 EXPOSE 10000
 
-ENTRYPOINT ["dotnet", "ChatApp.dll"]
+# Chạy app với PORT từ ENV
+CMD ["sh", "-c", "dotnet ChatApp.dll --urls http://0.0.0.0:$PORT"]

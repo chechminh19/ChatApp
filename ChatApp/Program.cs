@@ -30,6 +30,7 @@ builder.Services.AddCors(opt =>
         .AllowCredentials();
     });
 });
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000"; // Render yêu cầu PORT từ ENV
 
 var app = builder.Build();
 
@@ -52,8 +53,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<ChatHub>("/chat");
 });
-// Lấy cổng từ biến môi trường PORT, mặc định là 5000 nếu không có
-var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+// Lắng nghe trên tất cả địa chỉ IP (`0.0.0.0`)
 app.Run($"http://0.0.0.0:{port}");
 app.MapControllers();
 
