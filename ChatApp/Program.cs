@@ -1,7 +1,9 @@
 ﻿using ChatApp;
 using ChatApp.Hubs;
 using Microsoft.Azure.SignalR;
-
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Cors; // Nếu chưa có, thêm dòng này
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,7 +26,7 @@ builder.Services.AddCors(opt =>
     opt.AddPolicy("AllowMyOrigin", builder =>
     {
         //builder.WithOrigins("http://localhost:4200")
-        builder.AllowOrigins("https://chat-app-sandy-ten.vercel.app") //join-room
+        builder.WithOrigins("https://chat-app-sandy-ten.vercel.app/join-room") //join-room
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -50,9 +52,8 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHub<ChatHub>("/chat");
 });
-// **ÉP ỨNG DỤNG CHẠY TRÊN CỔNG ĐƯỢC CẤP TỪ RENDER**
-var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
-app.Urls.Clear(); // Xóa URL cũ
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000"; // Hoặc "8080" nếu bạn thích
+app.Urls.Clear();
 app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();

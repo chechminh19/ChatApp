@@ -9,7 +9,7 @@ export class ChatService {
 
   public connection : signalR.HubConnection = new signalR.HubConnectionBuilder()
   //.withUrl("http://localhost:5000/chat", {
-    .withUrl("http://0.0.0.0:10000/chat", {
+    .withUrl("https://chat-app-29084787355.asia-southeast1.run.app/chat", {
     skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
   })
