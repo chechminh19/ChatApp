@@ -3,12 +3,14 @@ name: CI Fullstack - Docker Compose
 on:
   push:
     branches: [master]
+     workflow_dispatch:
     paths:
       - 'AppChat/**'
       - 'ChatApp/**'
       - 'docker-compose.yml'
   pull_request:
     branches: [master]
+     workflow_dispatch:
     paths:
       - 'AppChat/**'
       - 'ChatApp/**'

@@ -3,11 +3,13 @@ name: CI Backend - Docker Build
 on:
   push:
     branches: [master]
+    workflow_dispatch:
     paths:
       - 'ChatApp/**'
       - '!AppChat/**'
   pull_request:
     branches: [master]
+     workflow_dispatch:
     paths:
       - 'ChatApp/**'
       - '!AppChat/**'
