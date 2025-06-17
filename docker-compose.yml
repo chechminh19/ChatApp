@@ -3,7 +3,7 @@
 services:
   frontend:
     build:
-      context: ./ChatApp/ChatApp/AppChat
+      context: ./ChatApp/AppChat
       dockerfile: DockerFileFE
     ports:
       - "4200:80"  # Mở cổng 4200 để truy cập ứng dụng Angular
