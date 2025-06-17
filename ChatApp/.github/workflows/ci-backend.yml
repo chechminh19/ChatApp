@@ -1,0 +1,22 @@
+name: CI Backend - Docker Build
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'ChatApp/**'
+      - '!AppChat/**'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'ChatApp/**'
+      - '!AppChat/**'
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v3
+      - run: docker build -t chatapp-backend ./ChatApp
