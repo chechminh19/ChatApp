@@ -1,0 +1,27 @@
+name: CI Fullstack - Docker Compose
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'AppChat/**'
+      - 'ChatApp/**'
+      - 'docker-compose.yml'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'AppChat/**'
+      - 'ChatApp/**'
+      - 'docker-compose.yml'
+
+jobs:
+  build-fullstack:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Compose Services
+        run: docker-compose -f docker-compose.yml build
